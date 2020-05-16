@@ -4,11 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ApiManager {
-  static String apiKey;
-
-  void checkIfLoggedIn() async {
+  Future<String> checkIfLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    apiKey = prefs.getString("API_KEY");
+    String apiKey = prefs.getString("API_KEY");
 
     if (apiKey == null) {
       http.get("http://api.notes.programmingaddict.com/apiKey").then((value) {
@@ -24,6 +22,6 @@ class ApiManager {
         print(onError);
       });
     }
-    print(apiKey);
+    return apiKey;
   }
 }

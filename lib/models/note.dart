@@ -17,9 +17,20 @@ class Note {
     return Note(
       noteID: json["noteID"],
       noteTitle: json["noteTitle"],
+      createDateTime: DateTime.parse(json["createDateTime"]),
+      latestEditDateTime:
+          DateTime.parse(json["latestEditDateTime"] ?? json["createDateTime"]),
+    );
+  }
+
+  factory Note.fromJsonWithContent(Map<String, dynamic> json) {
+    return Note(
+      noteID: json["noteID"],
+      noteTitle: json["noteTitle"],
       noteContent: json["noteContent"],
-      createDateTime: json["createDateTime"],
-      latestEditDateTime: json["latestEditDateTime"] ?? json["createDateTime"],
+      createDateTime: DateTime.parse(json["createDateTime"]),
+      latestEditDateTime:
+          DateTime.parse(json["latestEditDateTime"] ?? json["createDateTime"]),
     );
   }
 
