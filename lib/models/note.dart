@@ -9,8 +9,8 @@ class Note {
     this.noteID,
     @required this.noteTitle,
     this.noteContent,
-    @required this.createDateTime,
-    @required this.latestEditDateTime,
+    this.createDateTime,
+    this.latestEditDateTime,
   });
 
   factory Note.fromJson(Map<String, dynamic> json) {
@@ -34,7 +34,7 @@ class Note {
     );
   }
 
-  toJson(Note note) {
+  Map toJson() {
     return {
       "noteTitle": noteTitle,
       "noteContent": noteContent,

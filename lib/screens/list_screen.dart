@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes/models/note.dart';
+import 'package:notes/screens/note_screen.dart';
 import 'package:notes/services/note_services.dart';
 import 'package:date_format/date_format.dart';
 import '../locator.dart';
@@ -31,6 +32,17 @@ class _ListScreenState extends State<ListScreen> {
                 return ListTile(
                   title: Text(_noteList[index].noteTitle),
                   subtitle: Text(_getDate(_noteList, index)),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () async {
+                      final bool result =
+                          await _service.deleteNote(_noteList[index].noteID);
+                      if (result) {
+                        print("deleted");
+                        setState(() {});
+                      }
+                    },
+                  ),
                 );
               },
             );
@@ -39,6 +51,14 @@ class _ListScreenState extends State<ListScreen> {
             child: CircularProgressIndicator(),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => NoteScreen(appBarTitle: "Add Note")),
+        ),
       ),
     );
   }
