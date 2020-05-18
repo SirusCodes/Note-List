@@ -9,18 +9,16 @@ class ApiManager {
     String apiKey = prefs.getString("API_KEY");
 
     if (apiKey == null) {
-      http.get("http://api.notes.programmingaddict.com/apiKey").then((value) {
-        if (value.statusCode == 200) {
-          final data = json.decode(value.body);
-          apiKey = data["apiKey"];
+      http.Response res =
+          await http.get("http://api.notes.programmingaddict.com/apiKey");
+      if (res.statusCode == 200) {
+        final data = json.decode(res.body);
+        apiKey = data["apiKey"];
 
-          prefs.setString("API_KEY", apiKey);
-        } else {
-          print("Error occured");
-        }
-      }).catchError((onError) {
-        print(onError);
-      });
+        prefs.setString("API_KEY", apiKey);
+      } else {
+        print("Error occured");
+      }
     }
     return apiKey;
   }
